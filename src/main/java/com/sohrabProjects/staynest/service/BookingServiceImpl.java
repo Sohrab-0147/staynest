@@ -144,8 +144,8 @@ public class BookingServiceImpl implements BookingService{
         }
 
         String sessionUrl = checkoutService.getCheckoutSession(booking,
-                frontendUrl+"/payments/" +bookingId +"/status",
-                frontendUrl+"/payments/" +bookingId +"/status");
+                frontendUrl+"/booking/" +bookingId +"/confirm",
+                frontendUrl+"/booking/" +bookingId +"/confirm");
 
         booking.setBookingStatus(BookingStatus.PAYMENTS_PENDING);
         bookingRepository.save(booking);

@@ -1,0 +1,9 @@
+# nixpacks.toml — tells Railway exactly how to build + run this Spring Boot app
+[phases.setup]
+nixPkgs = ["jdk21_headless", "maven"]
+
+[phases.build]
+cmds = ["./mvnw clean package -DskipTests -B"]
+
+[start]
+cmd = "java -jar target/*.jar"

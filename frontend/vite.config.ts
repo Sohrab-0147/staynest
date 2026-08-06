@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     tailwindcss(),
@@ -14,14 +14,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  server: {
+  // Only apply proxy in development — production calls Railway directly via VITE_API_BASE_URL
+  server: mode === 'development' ? {
     port: 3000,
     proxy: {
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
-        // Forwards credentials (cookies) for refresh token
         configure: (proxy) => {
           proxy.on('proxyReq', (proxyReq) => {
             proxyReq.setHeader('origin', 'http://localhost:3000')
@@ -29,5 +29,6 @@ export default defineConfig({
         },
       },
     },
-  },
-})
+  } : { port: 3000 },
+}))
+
