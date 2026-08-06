@@ -1,9 +1,9 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
 import { tokenUtils } from '@/utils/tokenUtils';
 
-// ── Constants ─────────────────────────────────────────────────────
-
-const BASE_URL = '/api'; // proxied to http://localhost:8080 via vite dev server
+// In dev: Vite proxies /api → localhost:8081 (no CORS issues)
+// In prod: VITE_API_BASE_URL points directly to Railway backend
+const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 // ── Create base instance ──────────────────────────────────────────
 
